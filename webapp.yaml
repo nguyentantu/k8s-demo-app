@@ -22,31 +22,30 @@ spec:
         env:
         - name: USER_NAME
           valueFrom:
-            secretKeyRef: 
+            secretKeyRef:
               name: mongo-secret
               key: mongo-user
         - name: USER_PWD
           valueFrom:
-            secretKeyRef: 
+            secretKeyRef:
               name: mongo-secret
-              key: mongo-password
+              key: mongo-password 
         - name: DB_URL
-          valueFrom: 
-            configMapKeyRef: 
+          valueFrom:
+            configMapKeyRef:
               name: mongo-config ## name of config in metadata
               key: mongo-url
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: webapp-service
 spec:
-type: NodePort
+  type: NodePort
   selector:
-    app: webapp  ## equal Deployment lable in order to connect each other
+    app: webapp ## equal Deployment lable in order to connect each other
   ports:
     - protocol: TCP
       port: 3000
       targetPort: 3000 ## equal containerPort of Deployment
-      nodePort: 30001  ## between 30000-32767
+      nodePort: 30001 ## between 30000-32767
